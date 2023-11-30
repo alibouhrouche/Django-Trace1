@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block sidebar %}
+    {% include 'secretary/sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    <table class="uk-table" id="table">
+        <caption></caption>
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Nom</th>
+            <th><button
+                    id="showButton"
+                    hx-get="{% url 'secretary:new_client' %}"
+                    hx-target="#modals-here"
+                    class="uk-button uk-button-primary"
+                    _="on htmx:afterOnLoad wait 10ms then add .uk-open to #modal">New</button></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for client in organisations %}
+        	{% include 'secretary/client_row.html' %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

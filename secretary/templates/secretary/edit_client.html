@@ -1,0 +1,44 @@
+<div id="modal" class="uk-modal" style="display:block;">
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Edit Client</h2>
+        <br>
+        
+        <form hx-post="{% url 'secretary:edit_client' client.code %}" hx-target="#client-{{ client.code }}" hx-swap="outerHTML" _="on htmx:afterRequest take .uk-open from #modal wait 200ms then remove #modal">
+            {% csrf_token %}
+            <div class="uk-margin">
+                <label for="code">Code:</label>
+                <input id="code" name="code" class="uk-input" value="{{ client.code }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="nom">Name:</label>
+                <input id="nom" name="nom" class="uk-input" value="{{ client.nom }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="address">Address:</label>
+                <input id="address" name="address" class="uk-input" value="{{ client.address }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="telephone">Telephone:</label>
+                <input id="telephone" name="telephone" class="uk-input" value="{{ client.telephone }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="contact_name">Contact Name:</label>
+                <input id="contact_name" name="contact_name" class="uk-input" value="{{ client.contact_name }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="contact_email">Contact Email:</label>
+                <input id="contact_email" name="contact_email" class="uk-input" value="{{ client.contact_email }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="website">Website:</label>
+                <input id="website" name="website" class="uk-input" value="{{ client.website }}"/>
+            </div>
+            <button type="submit" class="uk-button uk-button-primary bg-[#1e87f0]">Save Changes</button>
+            <button
+                    id="cancelButton"
+                    type="button"
+                    class="uk-button uk-button-default"
+                    _="on click take .uk-open from #modal wait 200ms then remove #modal">Close</button>
+        </form>
+    </div>
+</div>

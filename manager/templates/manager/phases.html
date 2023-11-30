@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block sidebar %}
+    {% include 'manager/sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    <table class="uk-table" id="table">
+        <caption></caption>
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Nom</th>
+            <th>Budget</th>
+            <th><button
+                    hx-get="{% url 'manager:new_phase' project.code %}"
+                    hx-target="#modals-here"
+                    class="uk-button uk-button-primary"
+                    _="on htmx:afterOnLoad wait 10ms then add .uk-open to #modal">New Phase</button></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for phase in phases %}
+        	{% include 'manager/phase_row.html' %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

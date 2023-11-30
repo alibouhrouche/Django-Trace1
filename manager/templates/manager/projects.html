@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block sidebar %}
+    {% include 'manager/sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+    <table class="uk-table" id="table">
+        <caption></caption>
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Nom</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+        	{% include 'manager/project_row.html' %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

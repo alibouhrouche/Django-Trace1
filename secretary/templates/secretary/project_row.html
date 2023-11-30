@@ -1,0 +1,10 @@
+<tr id="project-{{ project.code }}">
+    <td>{{ project.code }}</td>
+    <td>{{ project.nom }}</td>
+    <td>{{ project.description | truncatewords:10 }}</td>
+    <td><button
+            hx-get="{% url 'secretary:edit_project' project.code %}"
+            hx-target="#modals-here"
+            class="uk-button uk-button-primary"
+            _="on htmx:afterOnLoad wait 10ms then add .uk-open to #modal">Edit</button></td>
+</tr>

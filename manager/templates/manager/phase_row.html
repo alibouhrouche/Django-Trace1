@@ -1,0 +1,10 @@
+<tr id="phase-{{ phase.code }}">
+    <td>{{ phase.code }}</td>
+    <td>{{ phase.nom }}</td>
+    <td>{{ phase.description | truncatewords:10 }}</td>
+    <td><button
+            hx-get="{% url 'manager:edit_phase' project.code phase.code %}"
+            hx-target="#modals-here"
+            class="uk-button uk-button-primary"
+            _="on htmx:afterOnLoad wait 10ms then add .uk-open to #modal">Edit</button></td>
+</tr>

@@ -1,0 +1,56 @@
+<div id="modal" class="uk-modal" style="display:block;">
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Edit Project</h2>
+        <br>
+        
+        <form hx-post="{% url 'director:edit_project' project.code %}" hx-target="#project-{{ project.code }}" hx-swap="outerHTML" _="on htmx:afterRequest take .uk-open from #modal wait 200ms then remove #modal">
+            {% csrf_token %}
+            <div class="uk-margin">
+                <label for="code">Code:</label>
+                <input id="code" name="code" class="uk-input" value="{{ project.code }}" disabled/>
+            </div>
+            <div class="uk-margin">
+                <label for="nom">Name:</label>
+                <input id="nom" name="nom" class="uk-input" value="{{ project.nom }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="description">Description:</label>
+                <input id="description" name="description" class="uk-input" value="{{ project.description }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="client">Client:</label>
+                <select name="client" id="client" class="uk-input">
+                    {% for organisation in organisations %}
+                        <option value="{{ organisation.code }}"{% if organisation.code == project.client.code %} selected{% endif %}>{{ organisation.code }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="uk-margin">
+                <label for="start_date">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" class="uk-input" value="{{ project.start_date | date:"Y-m-d" }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="end_date">End Date:</label>
+                <input type="date" name="end_date" id="end_date" class="uk-input" value="{{ project.end_date | date:"Y-m-d" }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="budget">Budget:</label>
+                <input type="number" name="budget" id="budget" class="uk-input" value="{{ project.budget }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="chief">Chief:</label>
+                <select name="chief" id="chief" class="uk-select">
+                    {% for chief in chiefs %}
+                        <option value="{{ chief.username }}"{% if chief.username == project.chief.username %} selected{% endif %}>{{ chief.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="uk-button uk-button-primary bg-[#1e87f0]">Save Changes</button>
+            <button
+                    id="cancelButton"
+                    type="button"
+                    class="uk-button uk-button-default"
+                    _="on click take .uk-open from #modal wait 200ms then remove #modal">Close</button>
+        </form>
+    </div>
+</div>

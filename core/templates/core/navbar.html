@@ -1,0 +1,41 @@
+<header class="bg-gray-50">
+    <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
+        <div class="flex items-center sm:justify-between sm:gap-4">
+
+            <div
+                    class="flex flex-1 items-center justify-between gap-8 sm:justify-end"
+            >
+
+                {% if request.user.is_authenticated %}
+                <div
+                        class="group flex shrink-0 items-center rounded-lg transition"
+                >
+                    <p class="ms-2 hidden text-left text-xs sm:block">
+                        <strong class="block font-medium">{{ user.first_name }} {{ user.last_name }}</strong>
+
+                        <span class="text-gray-500"> {{ user.email }} </span>
+                    </p>
+                    <form action="{% url 'accounts:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button
+                                class="ml-4 block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                                type="submit"
+                        >
+                            Log out
+                        </button>
+                    </form>
+
+                </div>
+                {% else %}
+                    <a
+                            href="{% url 'accounts:login' %}"
+                            class="block rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring"
+                            type="button"
+                    >
+                        Sign in
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>

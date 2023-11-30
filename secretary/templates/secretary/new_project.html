@@ -1,0 +1,44 @@
+<div id="modal" class="uk-modal" style="display:block;">
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">New Project</h2>
+        <br>
+        
+        <form hx-post="{% url 'secretary:new_project' %}" hx-target="table" hx-swap="beforeend" _="on submit take .uk-open from #modal">
+            {% csrf_token %}
+            <div class="uk-margin">
+                <label for="code">Code:</label>
+                <input id="code" name="code" class="uk-input"/>
+            </div>
+            <div class="uk-margin">
+                <label for="nom">Name:</label>
+                <input id="nom" name="nom" class="uk-input"/>
+            </div>
+            <div class="uk-margin">
+                <label for="description">Description:</label>
+                <input id="description" name="description" class="uk-input"/>
+            </div>
+            <div class="uk-margin">
+                <label for="client">Client:</label>
+                <select name="client" id="client" class="uk-input">
+                    {% for organisation in organisations %}
+                        <option value="{{ organisation.code }}"{% if organisation.code == project.client.code %} selected{% endif %}>{{ organisation.code }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="uk-margin">
+                <label for="start_date">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" class="uk-input"/>
+            </div>
+            <div class="uk-margin">
+                <label for="end_date">End Date:</label>
+                <input type="date" name="end_date" id="end_date" class="uk-input"/>
+            </div>
+            <button type="submit" class="uk-button uk-button-primary bg-[#1e87f0]">Save Changes</button>
+            <button
+                    id="cancelButton"
+                    type="button"
+                    class="uk-button uk-button-default"
+                    _="on click take .uk-open from #modal wait 200ms then remove #modal">Close</button>
+        </form>
+    </div>
+</div>
