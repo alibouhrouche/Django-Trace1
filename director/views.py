@@ -9,7 +9,7 @@ def projects_view(request):
         user = request.user  # type: User
         if user.is_superuser or user.is_secretary():
             return render(request, 'director/projects.html', {
-                'projects': Project.objects.order_by('-start_date'),
+                'projects': Project.objects.all(),
             })
     raise PermissionDenied
 
@@ -32,7 +32,7 @@ def new_project_view(request):
             if request.method == 'GET':
                 return render(request, 'director/new_project.html', {
                     'organisations': Organisation.objects.all(),
-                    'chiefs': User.objects.filter(is_chief=True),
+                    'chiefs': [x for x in User.objects.all() if x.is_chief()],
                 })
             project = Project()
             project.code = request.POST['code']

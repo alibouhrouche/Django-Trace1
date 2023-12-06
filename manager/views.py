@@ -25,17 +25,21 @@ def phases_view(request, pk):
     raise PermissionError
 
 
-def save_phase(phase, request):
-    phase.nom = request.POST.get('nom')
-    phase.budget = request.POST.get('budget')
+def save_team(phase, request):
     phase.team.clear()
     for t in request.POST.getlist('team'):
         u = User.objects.get(username=t)
         phase.team.add(u)
-    try:
-        phase.finished = request.POST.get('finished') == 'on'
-    except KeyError:
-        phase.finished = False
+
+
+def save_phase(phase, request):
+    phase.nom = request.POST.get('nom')
+    phase.description = request.POST.get('description')
+    phase.start_date = request.POST.get('start_date')
+    phase.end_date = request.POST.get('end_date')
+    phase.percentage = request.POST.get('percentage')
+    phase.finished = request.POST.get('finished', 'off') == 'on'
+    save_team(phase, request)
     phase.save()
 
 
@@ -46,10 +50,22 @@ def new_phase_view(request, pk):
             project = user.directed_projects.get(pk=pk)
             if request.method == 'GET':
                 return render(request, 'manager/new_phase.html', {
+                    'members': User.objects.all(),
                     'project': project,
                 })
-            phase = project.phases.create()
-            save_phase(phase, request)
+            phase = project.phases.create(
+                code=request.POST.get('code'),
+                nom=request.POST.get('nom'),
+                description=request.POST.get('description'),
+                start_date=request.POST.get('start_date'),
+                end_date=request.POST.get('end_date'),
+                percentage=request.POST.get('percentage'),
+                invoiced=False,
+                finished=request.POST.get('finished', 'off') == 'on',
+                payed=False,
+            )
+            save_team(phase, request)
+            phase.save()
             return render(request, 'manager/phase_row.html', {
                     'phase': phase,
                     'project': project,

@@ -3,7 +3,7 @@
         <h2 class="uk-modal-title">New Phase</h2>
         <br>
         
-        <form hx-post="{% url 'manager:new_project' %}" hx-target="table" hx-swap="beforeend" _="on submit take .uk-open from #modal">
+        <form hx-post="{% url 'manager:new_phase' project.code %}" hx-target="table" hx-swap="beforeend" _="on htmx:afterRequest take .uk-open from #modal wait 200ms then remove #modal">
             {% csrf_token %}
             <div class="uk-margin">
                 <label for="code">Code:</label>
@@ -26,8 +26,8 @@
                 <input type="date" name="end_date" id="end_date" class="uk-input"/>
             </div>
             <div class="uk-margin">
-                <label for="budget">Budget:</label>
-                <input type="number" name="budget" id="budget" class="uk-input"/>
+                <label for="percentage">Percentage:</label>
+                <input type="number" name="percentage" id="percentage" class="uk-input"/>
             </div>
             <div class="uk-margin">
                 <label for="team">Team:</label>

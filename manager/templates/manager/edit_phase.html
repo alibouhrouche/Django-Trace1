@@ -7,7 +7,7 @@
             {% csrf_token %}
             <div class="uk-margin">
                 <label for="code">Code:</label>
-                <input id="code" name="code" class="uk-input" value="{{ phase.code }}"/>
+                <input id="code" name="code" class="uk-input" value="{{ phase.code }}" disabled/>
             </div>
             <div class="uk-margin">
                 <label for="nom">Name:</label>
@@ -15,19 +15,19 @@
             </div>
             <div class="uk-margin">
                 <label for="description">Description:</label>
-                <input id="description" name="description" class="uk-input" value="{{ project.description }}"/>
+                <input id="description" name="description" class="uk-input" value="{{ phase.description }}"/>
             </div>
             <div class="uk-margin">
                 <label for="start_date">Start Date:</label>
-                <input type="date" name="start_date" id="start_date" class="uk-input" value="{{ project.start_date | date:"Y-m-d" }}"/>
+                <input type="date" name="start_date" id="start_date" class="uk-input" value="{{ phase.start_date | date:"Y-m-d" }}"/>
             </div>
             <div class="uk-margin">
                 <label for="end_date">End Date:</label>
-                <input type="date" name="end_date" id="end_date" class="uk-input" value="{{ project.end_date | date:"Y-m-d" }}"/>
+                <input type="date" name="end_date" id="end_date" class="uk-input" value="{{ phase.end_date | date:"Y-m-d" }}"/>
             </div>
             <div class="uk-margin">
-                <label for="budget">Budget:</label>
-                <input type="number" name="budget" id="budget" class="uk-input" value="{{ project.budget }}"/>
+                <label for="percentage">Percentage:</label>
+                <input type="number" name="percentage" id="percentage" class="uk-input" value="{{ phase.percentage }}"/>
             </div>
             <div class="uk-margin">
                 <label for="team">Team:</label>
@@ -36,6 +36,10 @@
                         <option value="{{ member.username }}"{% if member.username in team %} selected{% endif %}>{{ member.username }}</option>
                     {% endfor %}
                 </select>
+            </div>
+            <div class="uk-margin">
+                <label for="finished">Finished:</label>
+                <input type="checkbox" name="finished" id="finished" class="uk-checkbox" {% if phase.finished %}checked{% endif %}/>
             </div>
             <button type="submit" class="uk-button uk-button-primary bg-[#1e87f0]">Save Changes</button>
             <button

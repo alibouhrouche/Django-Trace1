@@ -3,7 +3,7 @@
         <h2 class="uk-modal-title">New Project</h2>
         <br>
         
-        <form hx-post="{% url 'director:new_project' %}" hx-target="table" hx-swap="beforeend" _="on submit take .uk-open from #modal">
+        <form hx-post="{% url 'director:new_project' %}" hx-target="table" hx-swap="beforeend" _="on htmx:afterRequest take .uk-open from #modal wait 200ms then remove #modal">
             {% csrf_token %}
             <div class="uk-margin">
                 <label for="code">Code:</label>
@@ -32,6 +32,18 @@
             <div class="uk-margin">
                 <label for="end_date">End Date:</label>
                 <input type="date" name="end_date" id="end_date" class="uk-input"/>
+            </div>
+            <div class="uk-margin">
+                <label for="budget">Budget:</label>
+                <input type="number" name="budget" id="budget" class="uk-input" value="{{ project.budget }}"/>
+            </div>
+            <div class="uk-margin">
+                <label for="chief">Chief:</label>
+                <select name="chief" id="chief" class="uk-select">
+                    {% for chief in chiefs %}
+                        <option value="{{ chief.username }}"{% if chief.username == project.chief.username %} selected{% endif %}>{{ chief.username }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <button type="submit" class="uk-button uk-button-primary bg-[#1e87f0]">Save Changes</button>
             <button

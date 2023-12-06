@@ -14,6 +14,8 @@
                         <strong class="block font-medium">{{ user.first_name }} {{ user.last_name }}</strong>
 
                         <span class="text-gray-500"> {{ user.email }} </span>
+                        <br>
+                        <strong class="block font-semibold"> {{ user.full_profile }} </strong>
                     </p>
                     <form action="{% url 'accounts:logout' %}" method="POST">
                         {% csrf_token %}
