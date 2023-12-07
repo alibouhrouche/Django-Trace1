@@ -3,5 +3,9 @@
     {% include 'core/left.html' %}
 {% endblock %}
 {% block content %}
-
+    {% if request.user.is_authenticated %}
+        {% include 'core/homes/logged_in.html' %}
+    {% else %}
+        {% include 'core/homes/logged_out.html' %}
+    {% endif %}
 {% endblock %}

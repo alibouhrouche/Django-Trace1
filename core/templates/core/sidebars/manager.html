@@ -1,0 +1,7 @@
+<section class="menu-section px-4">
+    <span class="menu-title">Chief</span>
+    <ul class="menu-items">
+        {% url 'manager:projects' as manager_projects %}
+        {% include 'core/sidebars/line.html' with name='Projects' url=manager_projects icon='gears' active='/manager/projects/' %}
+    </ul>
+</section>

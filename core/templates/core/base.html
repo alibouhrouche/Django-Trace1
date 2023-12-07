@@ -6,22 +6,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'css/uikit.min.css' %}">
-    <script src="{% static 'js/uikit.min.js' %}"></script>
-    <script src="{% static 'js/uikit-icons.min.js' %}"></script>
     <script src="{% static 'js/htmx.min.js' %}"></script>
     <script src="{% static 'js/_hyperscript.min.js' %}"></script>
     {% tailwind_css %}
 </head>
 
-<body>
-{% include 'core/navbar.html' %}
-<main class="grid grid-cols-5">
-    {% block sidebar %}{% endblock %}
-    <div class="col-span-4">
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+<div class="flex flex-row sm:gap-10">
+    {% include 'core/left.html' %}
+    <div class="w-full">
+        {% include 'core/navbar.html' %}
         {% block content %}{% endblock %}
     </div>
-</main>
-<div id="modals-here"></div>
+</div>
+{#<main class="grid grid-cols-5">#}
+{#    {% block sidebar %}{% endblock %}#}
+{#    <div class="col-span-4">#}
+{#        {% block content %}{% endblock %}#}
+{#    </div>#}
+{#</main>#}
+<label for="modal-edit"></label>
+<input class="modal-state" id="modal-edit" type="checkbox"/>
+<div class="modal">
+    <label class="modal-overlay" _="on click set #modal-edit.checked to false wait 200ms then remove #modal"></label>
+    <div class="modal-content flex flex-col gap-5 w-[90vw] max-w-3xl">
+        <label class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" _="on click set #modal-edit.checked to false wait 200ms then remove #modal">✕</label>
+        <div id="modals-here" class="w-full"></div>
+{#        #}
+{#        <h2 class="text-xl text-content1">Modal title 1</h2>#}
+{#        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur dolorum voluptate ratione dicta. Maxime cupiditate, est commodi consectetur earum iure, optio, obcaecati in nulla saepe maiores nobis iste quasi alias!</span>#}
+{#        <div class="flex gap-3">#}
+{#            <button#}
+{#                    class="btn btn-primary btn-block"#}
+{#                    _="on click set #modal-edit.checked to false">Save#}
+{#            </button>#}
+{#            <button class="btn btn-block"#}
+{#                    _="on click set #modal-edit.checked to false">Cancel#}
+{#            </button>#}
+{#        </div>#}
+    </div>
+</div>
+<label for="modal-confirm" class="hidden"></label>
+<input class="modal-state" id="modal-confirm" type="checkbox" />
+<div class="modal">
+    <label class="modal-overlay" for="modal-confirm"></label>
+    <div class="modal-content flex flex-col gap-5">
+        <label for="modal-confirm" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
+        <h2 class="text-xl" id="modal-confirm_title">Are you sure?</h2>
+        <span id="modal-confirm_desc"></span>
+        <div class="flex gap-3">
+            <button id="modal-confirm_yes" class="btn btn-error btn-block">Delete</button>
+            <label for="modal-confirm"
+                   class="btn btn-block">Cancel</label>
+        </div>
+    </div>
+</div>
+<label for="modal-error" class="hidden"></label>
+<input class="modal-state" id="modal-error" type="checkbox" />
+<div class="modal">
+    <label class="modal-overlay" for="modal-error"></label>
+    <div class="modal-content flex flex-col gap-5">
+        <label for="modal-error" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
+        <h2 class="text-xl">Error</h2>
+        <span id="modal-confirm_desc">An error has occurred</span>
+        <div class="flex gap-3">
+            <label for="modal-error"
+                   class="btn btn-block btn-error">OK</label>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

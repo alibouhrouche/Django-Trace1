@@ -1,4 +1,5 @@
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 from django.shortcuts import render
 from accounts.models import User
 from projects.models import Project, Organisation
@@ -9,7 +10,7 @@ def projects_view(request):
         user = request.user  # type: User
         if user.is_superuser or user.is_secretary():
             return render(request, 'secretary/projects.html', {
-                'projects': Project.objects.order_by('-start_date'),
+                'projects': Project.objects.all(),
             })
     raise PermissionDenied
 
@@ -107,3 +108,28 @@ def edit_client_view(request, pk):
                 'client': organisation,
             })
     raise PermissionDenied
+
+
+def delete_project_view(request, pk):
+    if request.method != 'DELETE':
+        return HttpResponse(status=405)
+    if request.user.is_authenticated:
+        user = request.user  # type: User
+        if user.is_superuser or user.is_secretary():
+            project = Project.objects.get(pk=pk)
+            project.delete()
+            return HttpResponse(status=200, content="")
+    raise PermissionDenied
+
+
+def delete_client_view(request, pk):
+    if request.method != 'DELETE':
+        return HttpResponse(status=405)
+    if request.user.is_authenticated:
+        user = request.user  # type: User
+        if user.is_superuser or user.is_secretary():
+            client = Organisation.objects.get(pk=pk)
+            client.delete()
+            return HttpResponse(status=200, content="")
+    raise PermissionDenied
+

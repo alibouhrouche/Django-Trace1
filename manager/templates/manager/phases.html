@@ -2,30 +2,35 @@
 
 {% block title %}Projects{% endblock %}
 
-{% block sidebar %}
-    {% include 'manager/sidebar.html' %}
-{% endblock %}
-
 {% block content %}
-    <table class="uk-table" id="table">
-        <caption></caption>
-        <thead>
-        <tr>
-            <th>Code</th>
-            <th>Nom</th>
-            <th>Description</th>
-            <th><button
-                    hx-get="{% url 'manager:new_phase' project.code %}"
-                    hx-target="#modals-here"
-                    class="uk-button uk-button-primary"
-                    _="on htmx:afterOnLoad wait 10ms then add .uk-open to #modal">New Phase</button></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for phase in phases %}
-        	{% include 'manager/phase_row.html' %}
-        {% endfor %}
+    <div class="max-w-screen-md mx-auto my-0.5 p-4">
+        <table class="table-compact table overflow-x-scroll">
+            <thead>
+            <tr>
+                <th>Code</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th class="w-20 min-w-[80px]">
+                    <button
+                            hx-get="{% url 'manager:new_phase' project.code %}"
+                            hx-target="#modals-here"
+                            class="btn btn-ghost border-transparent"
+                            _="on htmx:afterOnLoad wait 10ms then set #modal-edit.checked to true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                </th>
+            </tr>
+            </thead>
+            <tbody id="table-body">
+            {% for phase in phases %}
+                {% include 'manager/phase_row.html' %}
+            {% endfor %}
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

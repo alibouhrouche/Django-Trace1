@@ -1,44 +1,41 @@
-<div id="modal" class="uk-modal" style="display:block;">
-    <div class="uk-modal-dialog uk-modal-body">
-        <h2 class="uk-modal-title">Edit Project</h2>
-        <br>
-        
-        <form hx-post="{% url 'secretary:edit_project' project.code %}" hx-target="#project-{{ project.code }}" hx-swap="outerHTML" _="on htmx:afterRequest take .uk-open from #modal wait 200ms then remove #modal">
-            {% csrf_token %}
-            <div class="uk-margin">
-                <label for="code">Code:</label>
-                <input id="code" name="code" class="uk-input" value="{{ project.code }}" disabled/>
-            </div>
-            <div class="uk-margin">
-                <label for="nom">Name:</label>
-                <input id="nom" name="nom" class="uk-input" value="{{ project.nom }}"/>
-            </div>
-            <div class="uk-margin">
-                <label for="description">Description:</label>
-                <input id="description" name="description" class="uk-input" value="{{ project.description }}"/>
-            </div>
-            <div class="uk-margin">
-                <label for="client">Client:</label>
-                <select name="client" id="client" class="uk-input">
-                    {% for organisation in organisations %}
-                        <option value="{{ organisation.code }}"{% if organisation.code == project.client.code %} selected{% endif %}>{{ organisation.code }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="uk-margin">
-                <label for="start_date">Start Date:</label>
-                <input type="date" name="start_date" id="start_date" class="uk-input" value="{{ project.start_date | date:"Y-m-d" }}"/>
-            </div>
-            <div class="uk-margin">
-                <label for="end_date">End Date:</label>
-                <input type="date" name="end_date" id="end_date" class="uk-input" value="{{ project.end_date | date:"Y-m-d" }}"/>
-            </div>
-            <button type="submit" class="uk-button uk-button-primary bg-[#1e87f0]">Save Changes</button>
-            <button
-                    id="cancelButton"
-                    type="button"
-                    class="uk-button uk-button-default"
-                    _="on click take .uk-open from #modal wait 200ms then remove #modal">Close</button>
-        </form>
-    </div>
+<div id="modal">
+    <h2 class="text-xl text-content1">Edit Project</h2>
+    <br>
+    <form class="form-group"
+          hx-post="{% url 'secretary:edit_project' project.code %}" hx-target="#project-{{ project.code }}"
+          hx-swap="outerHTML" _="on htmx:afterRequest set #modal-edit.checked to false wait 200ms then remove #modal">
+        {% csrf_token %}
+        <div class="form-field">
+            <label for="code" class="form-label">Code:</label>
+            <input id="code" name="code" class="input-block input" value="{{ project.code }}" disabled/>
+        </div>
+        <div class="form-field">
+            <label for="nom" class="form-label">Name:</label>
+            <input id="nom" name="nom" class="input-block input" value="{{ project.nom }}"/>
+        </div>
+        <div class="form-field">
+            <label for="description" class="form-label">Description:</label>
+            <input id="description" name="description" class="input-block input" value="{{ project.description }}"/>
+        </div>
+        <div class="form-field">
+            <label for="client" class="form-label">Client:</label>
+            <select name="client" id="client" class="select select-block">
+                {% for organisation in organisations %}
+                    <option value="{{ organisation.code }}"{% if organisation.code == project.client.code %}
+                            selected{% endif %}>{{ organisation.code }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-field">
+            <label for="start_date" class="form-label">Start Date:</label>
+            <input type="date" name="start_date" id="start_date" class="input-block input"
+                   value="{{ project.start_date | date:"Y-m-d" }}"/>
+        </div>
+        <div class="form-field">
+            <label for="end_date" class="form-label">End Date:</label>
+            <input type="date" name="end_date" id="end_date" class="input-block input"
+                   value="{{ project.end_date | date:"Y-m-d" }}"/>
+        </div>
+        {% include 'core/modal_buttons.html' %}
+    </form>
 </div>

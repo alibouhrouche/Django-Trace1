@@ -1,0 +1,7 @@
+<section class="menu-section px-4">
+    <span class="menu-title">Super User</span>
+    <ul class="menu-items">
+        {% url 'admin:index' as admin_index %}
+        {% include 'core/sidebars/line.html' with name='Admin' url=admin_index icon='gears' %}
+    </ul>
+</section>

@@ -1,0 +1,46 @@
+<div class="modal">
+    <label class="modal-overlay" for="modal-1"></label>
+    <div class="modal-content flex w-full flex-col gap-5 p-7">
+        <label for="modal-1" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
+        <div class="flex flex-col gap-2">
+            <h2 class="text-content1 text-center text-2xl font-semibold">Sign In</h2>
+            <p class="mx-auto max-w-xs text-sm text-content2">Sign in to your account to continue.</p>
+        </div>
+        <div id="login-alert"></div>
+        <section>
+            <form hx-post="{% url 'accounts:login' %}" hx-target="#login-alert">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="form-field">
+                        <label for="login-username" class="form-label">Username</label>
+                        <input name="username" id="login-username" placeholder="Type here" type="text" class="input max-w-full" />
+                    </div>
+
+                    <div class="form-field">
+                        <label for="login-password" class="form-label">
+                            <span>Password</span>
+                        </label>
+                        <div class="form-control">
+                            <input name="password" id="login-password" placeholder="Type here" type="password" class="input max-w-full" />
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <div class="form-control justify-between">
+                            <div>
+                                <input name="remember_me" id="login-remember_me" type="checkbox" class="checkbox" />
+                                <label for="login-remember_me">Remember me</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-field pt-5">
+                        <div class="form-control justify-between">
+                            <button type="submit" class="btn btn-primary w-full">Sign in</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

@@ -2,25 +2,23 @@
 
 {% block title %}Projects{% endblock %}
 
-{% block sidebar %}
-    {% include 'manager/sidebar.html' %}
-{% endblock %}
-
 {% block content %}
-    <table class="uk-table" id="table">
-        <caption></caption>
-        <thead>
-        <tr>
-            <th>Code</th>
-            <th>Nom</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for project in projects %}
-        	{% include 'manager/project_row.html' %}
-        {% endfor %}
+    <div class="max-w-screen-md mx-auto my-0.5 p-4">
+        <table class="table-compact table overflow-x-scroll">
+            <thead>
+            <tr>
+                <th>Code</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th class="w-20 min-w-[80px]"></th>
+            </tr>
+            </thead>
+            <tbody id="table-body">
+            {% for project in projects %}
+                {% include 'manager/project_row.html' %}
+            {% endfor %}
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

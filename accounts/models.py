@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from hashlib import sha256
 
 
 class User(AbstractUser):
@@ -38,3 +39,6 @@ class User(AbstractUser):
 
     def can_manage_invoices(self):
         return (self.profile == 'FN') or self.is_superuser
+
+    def get_avatar(self):
+        return "https://gravatar.com/avatar/"+sha256(self.email.strip().lower().encode()).hexdigest() + "?d=identicon"

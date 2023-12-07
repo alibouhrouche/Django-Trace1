@@ -1,44 +1,39 @@
-<div id="modal" class="uk-modal" style="display:block;">
-    <div class="uk-modal-dialog uk-modal-body">
-        <h2 class="uk-modal-title">New Client</h2>
-        <br>
-        
-        <form hx-post="{% url 'secretary:new_client' %}" hx-target="table" hx-swap="beforeend" _="on submit take .uk-open from #modal">
-            {% csrf_token %}
-            <div class="uk-margin">
-                <label for="code">Code:</label>
-                <input id="code" name="code" class="uk-input" value="{{ client.code }}"/>
-            </div>
-            <div class="uk-margin">
-                <label for="nom">Name:</label>
-                <input id="nom" name="nom" class="uk-input" value="{{ client.nom }}"/>
-            </div>
-            <div class="uk-margin">
-                <label for="address">Address:</label>
-                <input id="address" name="address" class="uk-input" value="{{ client.address }}"/>
-            </div>
-            <div class="uk-margin">
-                <label for="telephone">Telephone:</label>
-                <input id="telephone" name="telephone" class="uk-input" value="{{ client.telephone }}"/>
-            </div>
-            <div class="uk-margin">
-                <label for="contact_name">Contact Name:</label>
-                <input id="contact_name" name="contact_name" class="uk-input" value="{{ client.contact_name }}"/>
-            </div>
-            <div class="uk-margin">
-                <label for="contact_email">Contact Email:</label>
-                <input id="contact_email" name="contact_email" class="uk-input" value="{{ client.contact_email }}"/>
-            </div>
-            <div class="uk-margin">
-                <label for="website">Website:</label>
-                <input id="website" name="website" class="uk-input" value="{{ client.website }}"/>
-            </div>
-            <button type="submit" class="uk-button uk-button-primary bg-[#1e87f0]">Save Changes</button>
-            <button
-                    id="cancelButton"
-                    type="button"
-                    class="uk-button uk-button-default"
-                    _="on click take .uk-open from #modal wait 200ms then remove #modal">Close</button>
-        </form>
-    </div>
+<div id="modal">
+    <h2 class="text-xl text-content1">New Client</h2>
+    <br>
+    <form class="form-group"
+          hx-post="{% url 'secretary:new_client' %}" hx-target="#table-body" hx-swap="beforeend"
+          _="on htmx:afterRequest set #modal-edit.checked to false wait 200ms then remove #modal">
+        {% csrf_token %}
+        <div class="form-field">
+            <label for="code" class="form-label">Code:</label>
+            <input id="code" name="code" class="input-block input" value="{{ client.code }}"/>
+        </div>
+        <div class="form-field">
+            <label for="nom" class="form-label">Name:</label>
+            <input id="nom" name="nom" class="input-block input" value="{{ client.nom }}"/>
+        </div>
+        <div class="form-field">
+            <label for="address" class="form-label">Address:</label>
+            <input id="address" name="address" class="input-block input" value="{{ client.address }}"/>
+        </div>
+        <div class="form-field">
+            <label for="telephone" class="form-label">Telephone:</label>
+            <input id="telephone" name="telephone" class="input-block input" value="{{ client.telephone }}"/>
+        </div>
+        <div class="form-field">
+            <label for="contact_name" class="form-label">Contact Name:</label>
+            <input id="contact_name" name="contact_name" class="input-block input" value="{{ client.contact_name }}"/>
+        </div>
+        <div class="form-field">
+            <label for="contact_email" class="form-label">Contact Email:</label>
+            <input id="contact_email" name="contact_email" class="input-block input"
+                   value="{{ client.contact_email }}"/>
+        </div>
+        <div class="form-field">
+            <label for="website" class="form-label">Website:</label>
+            <input id="website" name="website" class="input-block input" value="{{ client.website }}"/>
+        </div>
+        {% include 'core/modal_buttons.html' %}
+    </form>
 </div>

@@ -22,7 +22,13 @@
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/../Trace1\templates" />
+        <option value="$MODULE_DIR$/templates" />
+        <option value="$MODULE_DIR$/accounts/templates" />
+        <option value="$MODULE_DIR$/core/templates" />
+        <option value="$MODULE_DIR$/director/templates" />
+        <option value="$MODULE_DIR$/manager/templates" />
+        <option value="$MODULE_DIR$/projects/templates" />
+        <option value="$MODULE_DIR$/secretary/templates" />
       </list>
     </option>
   </component>

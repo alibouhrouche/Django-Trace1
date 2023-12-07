@@ -2,5 +2,5 @@
     <td>{{ project.code }}</td>
     <td>{{ project.nom }}</td>
     <td>{{ project.description | truncatewords:10 }}</td>
-    <td><a href="{% url 'manager:phases' project.code %}" class="uk-button uk-button-primary">Phases</a></td>
+    <td><a href="{% url 'manager:phases' project.code %}" class="btn btn-primary">Phases</a></td>
 </tr>

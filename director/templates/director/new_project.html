@@ -1,56 +1,51 @@
-<div id="modal" class="uk-modal" style="display:block;">
-    <div class="uk-modal-dialog uk-modal-body">
-        <h2 class="uk-modal-title">New Project</h2>
+<div id="modal">
+    <h2 class="text-xl text-content1">New Project</h2>
         <br>
-        
-        <form hx-post="{% url 'director:new_project' %}" hx-target="table" hx-swap="beforeend" _="on htmx:afterRequest take .uk-open from #modal wait 200ms then remove #modal">
+        <form class="form-group"
+              hx-post="{% url 'director:new_project' %}" hx-target="#table-body" hx-swap="beforeend" 
+              _="on htmx:afterRequest set #modal-edit.checked to false wait 200ms then remove #modal">
             {% csrf_token %}
-            <div class="uk-margin">
-                <label for="code">Code:</label>
-                <input id="code" name="code" class="uk-input"/>
+            <div class="form-field">
+                <label for="code" class="form-label">Code:</label>
+                <input id="code" name="code" class="input-block input"/>
             </div>
-            <div class="uk-margin">
-                <label for="nom">Name:</label>
-                <input id="nom" name="nom" class="uk-input"/>
+            <div class="form-field">
+                <label for="nom" class="form-label">Name:</label>
+                <input id="nom" name="nom" class="input-block input"/>
             </div>
-            <div class="uk-margin">
-                <label for="description">Description:</label>
-                <input id="description" name="description" class="uk-input"/>
+            <div class="form-field">
+                <label for="description" class="form-label">Description:</label>
+                <input id="description" name="description" class="input-block input"/>
             </div>
-            <div class="uk-margin">
-                <label for="client">Client:</label>
-                <select name="client" id="client" class="uk-select">
+            <div class="form-field">
+                <label for="client" class="form-label">Client:</label>
+                <select name="client" id="client" class="select select-block">
                     {% for organisation in organisations %}
                         <option value="{{ organisation.code }}"{% if organisation.code == project.client.code %} selected{% endif %}>{{ organisation.code }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <div class="uk-margin">
-                <label for="start_date">Start Date:</label>
-                <input type="date" name="start_date" id="start_date" class="uk-input"/>
+            <div class="form-field">
+                <label for="start_date" class="form-label">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" class="input-block input"/>
             </div>
-            <div class="uk-margin">
-                <label for="end_date">End Date:</label>
-                <input type="date" name="end_date" id="end_date" class="uk-input"/>
+            <div class="form-field">
+                <label for="end_date" class="form-label">End Date:</label>
+                <input type="date" name="end_date" id="end_date" class="input-block input"/>
             </div>
-            <div class="uk-margin">
-                <label for="budget">Budget:</label>
-                <input type="number" name="budget" id="budget" class="uk-input" value="{{ project.budget }}"/>
+            <div class="form-field">
+                <label for="budget" class="form-label">Budget:</label>
+                <input type="number" name="budget" id="budget" class="input-block input" value="{{ project.budget }}"/>
             </div>
-            <div class="uk-margin">
-                <label for="chief">Chief:</label>
-                <select name="chief" id="chief" class="uk-select">
+            <div class="form-field">
+                <label for="chief" class="form-label">Chief:</label>
+                <select name="chief" id="chief" class="select select-block">
                     {% for chief in chiefs %}
                         <option value="{{ chief.username }}"{% if chief.username == project.chief.username %} selected{% endif %}>{{ chief.username }}</option>
                     {% endfor %}
                 </select>
             </div>
-            <button type="submit" class="uk-button uk-button-primary bg-[#1e87f0]">Save Changes</button>
-            <button
-                    id="cancelButton"
-                    type="button"
-                    class="uk-button uk-button-default"
-                    _="on click take .uk-open from #modal wait 200ms then remove #modal">Close</button>
+            {% include 'core/modal_buttons.html' %}
         </form>
     </div>
 </div>

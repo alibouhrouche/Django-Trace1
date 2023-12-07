@@ -44,6 +44,25 @@ module.exports = {
     theme: {
         extend: {},
     },
+    // /** @type {import('rippleui').Config} */
+    // rippleui: {
+    //     themes: [
+    //         {
+    //             themeName: "light",
+    //             colorScheme: "light",
+    //             colors: {
+    //                 backgroundPrimary: "#964643",
+    //             },
+    //         },
+    //         {
+    //             themeName: "dark",
+    //             colorScheme: "dark",
+    //             colors: {
+    //                 backgroundPrimary: "#1a1a1a",
+    //             },
+    //         },
+    //     ],
+    // },
     plugins: [
         /**
          * '@tailwindcss/forms' is the forms plugin that provides a minimal styling

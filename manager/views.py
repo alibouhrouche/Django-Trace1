@@ -1,3 +1,5 @@
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 from django.shortcuts import render
 from accounts.models import User
 
@@ -91,3 +93,15 @@ def edit_phase_view(request, pk, phase_pk):
                     'project': phase.project,
             })
     raise PermissionError
+
+
+def delete_phase_view(request, pk, phase_pk):
+    if request.method != 'DELETE':
+        return HttpResponse(status=405)
+    if request.user.is_authenticated:
+        user = request.user  # type: User
+        if user.is_superuser or user.is_chief():
+            phase = user.directed_projects.get(pk=pk).phases.get(pk=phase_pk)
+            phase.delete()
+            return HttpResponse(status=200, content="")
+    raise PermissionDenied
